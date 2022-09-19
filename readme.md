@@ -52,7 +52,26 @@ get_response(context,num_beams)
 ```
 #### we'll get a result like that :
 ![image](https://github.com/inesgh1/Paraphrasing-Web-App/blob/main/outputof%20test.png)
+# Break the Text into Individual Sentences
+We got ten different paraphrased sentences by the model because we set the number of responses to 10. Paraphrase a paragraph: The model works efficiently on a single sentence. Hence, we have to break a paragraph into single sentences. The code below takes the input paragraph and splits it into a list of sentences. Then we apply a loop operation and paraphrase each sentence in the iteration.
 
+The next step in paraphrasing is to break the provided sample text into sentences. This is because it is easier to paraphrase one sentence rather than an entire paragraph.
+```
+from sentence_splitter import SentenceSplitter, split_text_into_sentences
+splitter = SentenceSplitter(language='en')
+
+context = "I will be showing you how to build a web application in Python using the SweetViz and its dependent library. Data science combines multiple fields, including statistics, scientific methods, artificial intelligence (AI), and data analysis, to extract value from data. Those who practice data science are called data scientists, and they combine a range of skills to analyze data collected from the web, smartphones, customers, sensors, and other sources to derive actionable insights."
+sentence_list = splitter.split(context)
+num_return_sequences = 5
+get_response(context, num_return_sequences)
+paraphrase = [] 
+for i in sentence_list:
+	a = get_response(i,1)
+	paraphrase.append(a)
+```
+##### Here is what we get as a result :
+
+![result image](https://github.com/inesgh1/Paraphrasing-Web-App/blob/main/result%20list.png)
 
 
 
