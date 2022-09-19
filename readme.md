@@ -34,10 +34,24 @@ Running this code should download a bunch of files that look like this. The Pyto
 
 ![image](https://github.com/inesgh1/Paraphrasing-Web-App/blob/main/set_peagasus.png)
 
+# Access the model
+``` 
+def get_response(input_text,num_return_sequences):
+  batch = tokenizer.prepare_seq2seq_batch([input_text],truncation=True,padding='longest',max_length=60, return_tensors="pt").to(torch_device)
+  translated = model.generate(**batch,max_length=60,num_beams=10, num_return_sequences=num_return_sequences, temperature=1.5)
+  tgt_text = tokenizer.batch_decode(translated, skip_special_tokens=True)
+  return tgt_text
+``` 
 # Test the model
-
-
-
+```
+#test the model
+context = "Which course should I take to get started in data science?"
+num_return_sequences = 10
+num_beams = 10
+get_response(context,num_beams)
+```
+#### we'll get a result like that :
+![image](https://github.com/inesgh1/Paraphrasing-Web-App/blob/main/outputof%20test.png)
 
 
 
