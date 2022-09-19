@@ -73,7 +73,22 @@ for i in sentence_list:
 
 ![result image](https://github.com/inesgh1/Paraphrasing-Web-App/blob/main/result%20list.png)
 
+Combine the separated lists into a paragraph:
+first we need to create a second split using the following code.
+```
+paraphrase2 = [''.join(x) for x in paraphrase]
 
+paraphrase2
+```
+This will have a similar output as the first time. Then finally we will combine these split lists into a paragraph. The code for doing that is:
+
+```
+paraphrase3 = [''.join(x for x in paraphrase2) ]
+
+paraphrased_text =str(paraphrase3).strip('[ ]').strip("'")
+
+paraphrased_text
+```
 
 
 
