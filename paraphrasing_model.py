@@ -12,6 +12,12 @@ Original file is located at
 !pip install transformers
 !pip install SentencePiece
 
+from fastapi import FastAPI, Request
+from sentence_transformers import SentenceTransformer, util
+from starlette.responses import FileResponse 
+from fastapi.staticfiles import StaticFiles
+app = FastAPI()
+app.mount("/public", StaticFiles(directory="public"), name="public")
 import torch
   from typing import List
   from transformers import PegasusForConditionalGeneration, PegasusTokenizer 
@@ -56,4 +62,15 @@ paraphrase3 = [''.join(x for x in paraphrase2) ]
 paraphrased_text =str(paraphrase3).strip('[ ]').strip("'")
 
 paraphrased_text
-
+#Calls the model and returns the paraphrased output and some simple metrics. 
+@app.post('/paraphrase/')
+async def main(item: Request):
+    userInput = await item.json()
+    input_string = get_input_string(
+        userInput['text'], userInput['num_beams'])
+    tokenized_input = tokenizer(input_string, return_tensors='pt').to(device)
+    encoded_output = model.generate(**tokenized_input, max_length=1000)[0]
+    decoded = tokenizer.decode(encoded_output, skip_special_tokens=True)
+    return {
+        'Paraphrase': decoded
+        }
