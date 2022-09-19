@@ -21,7 +21,20 @@ Now that we have covered the basics, let’s see how we can use Pegasus for para
 # Setting Up Pegasus 
 The next thing we need to do is to import the Pegasus model and set it up because we need it to do the paraphrasing. Without it, things will become more difficult.
 To  set up Pegasus, we need to install Pytorch first. Pytorch is a Python package that provides high-level features of tensor computation and deep neural networks. It is the underlying framework that powers Pegasus.
+``` 
+  import torch
+  from typing import List
+  from transformers import PegasusForConditionalGeneration, PegasusTokenizer 
+  model_name = 'tuner007/pegasus_paraphrase' 
+  torch_device = 'cuda' if torch.cuda.is_available() else 'cpu'
+  tokenizer = PegasusTokenizer.from_pretrained(model_name)
+  model = PegasusForConditionalGeneration.from_pretrained(model_name).to(torch_device)
+``` 
+Running this code should download a bunch of files that look like this. The Pytorch model bin is a pretty large file, so don’t worry if it takes a bit of time to download it.
 
+![image](https://github.com/inesgh1/Paraphrasing-Web-App/blob/main/set_peagasus.png)
+
+# Test the model
 
 
 
